@@ -16,7 +16,7 @@ export default async function ProjectsPage() {
     .order('sort_order', { ascending: true })
 
   const allProjects: Project[] = projects ?? []
-  const allTags = [...new Set(allProjects.flatMap((p) => p.tags))].sort()
+  const allTags = Array.from(new Set(allProjects.flatMap((p) => p.tags))).sort()
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-16">
