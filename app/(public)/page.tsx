@@ -10,7 +10,7 @@ export default function HomePage() {
           <span className="h-px w-8 bg-accent shrink-0" />
           <p className="text-accent text-xs tracking-widest uppercase">
             {/* ↓ Replace with your role */}
-            Data Engineer
+            Data Engineer & Backend Engineer — Python, SQL, and modern data tooling.
           </p>
         </div>
 
@@ -23,10 +23,7 @@ export default function HomePage() {
         {/* Bio */}
         <p className="text-gray-500 dark:text-gray-400 max-w-lg leading-relaxed mb-10">
           {/* ↓ Replace with your bio */}
-          I'm a data engineer who builds the pipelines and datasets that make analytics and
-          decision-making actually work from raw ingestion to stakeholder-facing dashboards.
-          I've done it across public sector, consulting, and non-profit environments, and
-          I'm just getting started.
+          Building the data infrastructure behind better decisions.
         </p>
 
         {/* CTA buttons */}
