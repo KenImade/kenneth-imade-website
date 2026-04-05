@@ -10,7 +10,7 @@ export default function HomePage() {
           <span className="h-px w-8 bg-accent shrink-0" />
           <p className="text-accent text-xs tracking-widest uppercase">
             {/* ↓ Replace with your role */}
-            Data Engineer & Backend Engineer — Python, SQL, and modern data tooling.
+            Software Engineer
           </p>
         </div>
 
@@ -23,7 +23,7 @@ export default function HomePage() {
         {/* Bio */}
         <p className="text-gray-500 dark:text-gray-400 max-w-lg leading-relaxed mb-10">
           {/* ↓ Replace with your bio */}
-          Building the data infrastructure behind better decisions.
+          Building solutions with technology.
         </p>
 
         {/* CTA buttons */}
