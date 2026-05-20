@@ -1,0 +1,122 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+  .slice(0, 4);
+
+const products = (await getCollection('products')).map((p) => ({ entry: p, kind: 'product' as const }));
+const projects = (await getCollection('projects')).map((p) => ({ entry: p, kind: 'project' as const }));
+const built = [...products, ...projects]
+  .sort((a, b) => new Date(b.entry.data.date).getTime() - new Date(a.entry.data.date).getTime())
+  .slice(0, 3);
+---
+
+<BaseLayout title="Kenneth Imade">
+
+  <!-- Intro -->
+  <div class="mb-14">
+    <h1 class="font-semibold mb-4 leading-snug" style="font-size: 1.15rem; max-width: 480px;">
+      Kenneth Imade
+    </h1>
+    <p class="leading-relaxed mb-3" style="max-width: 500px; color: #d0d0d0;">
+      Software engineer based in Lagos, Nigeria. I build backend systems and data pipelines,
+      mostly in Go. I care about systems that are simple, observable, and fast.
+    </p>
+    <p class="leading-relaxed" style="max-width: 500px; color: #888;">
+      This is where I write about what I build and learn, architecture decisions,
+      data engineering, and lessons from shipping real products.
+    </p>
+
+    <!-- Social links -->
+    <div class="flex items-center gap-1 mt-7" style="color: #555;">
+      <a href="https://github.com/KenImade" target="_blank" rel="noopener noreferrer"
+        class="text-sm px-3 py-1 rounded transition-colors duration-150 hover:text-sky-400"
+        style="border: 1px solid #2a2a2a;">
+        GitHub
+      </a>
+      <a href="https://www.linkedin.com/in/kenneth-imade/" target="_blank" rel="noopener noreferrer"
+        class="text-sm px-3 py-1 rounded transition-colors duration-150 hover:text-sky-400"
+        style="border: 1px solid #2a2a2a;">
+        LinkedIn
+      </a>
+      <a href="https://x.com/kenneth1made" target="_blank" rel="noopener noreferrer"
+        class="text-sm px-3 py-1 rounded transition-colors duration-150 hover:text-sky-400"
+        style="border: 1px solid #2a2a2a;">
+        Twitter
+      </a>
+    </div>
+  </div>
+
+  <!-- Recent writing -->
+  {posts.length > 0 && (
+    <div class="mb-14">
+      <p class="text-xs font-medium mb-4" style="text-transform: uppercase; letter-spacing: 0.08em; color: #38bdf8;">
+        Writing
+      </p>
+      <ul class="flex flex-col">
+        {posts.map((post) => (
+          <li class="border-t" style="border-color: #222222;">
+            <a
+              href={`/writing/${post.id.replace(/\.(md|mdx)$/, '')}`}
+              class="flex items-baseline justify-between gap-6 py-3 group"
+            >
+              <span class="group-hover:text-sky-400 transition-colors duration-150">
+                {post.data.title}
+              </span>
+              <time class="text-sm shrink-0" style="color: #555;">
+                {new Date(post.data.date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
+              </time>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <div class="border-t" style="border-color: #222222;">
+        <a href="/writing" class="text-sm py-3 block hover:text-sky-400 transition-colors duration-150" style="color: #555;">
+          All posts →
+        </a>
+      </div>
+    </div>
+  )}
+
+  <!-- Recent built -->
+  {built.length > 0 && (
+    <div>
+      <p class="text-xs font-medium mb-4" style="text-transform: uppercase; letter-spacing: 0.08em; color: #38bdf8;">
+        Built
+      </p>
+      <ul class="flex flex-col">
+        {built.map(({ entry, kind }) => {
+          const href = kind === 'product' ? (entry.data.url ?? null) : (entry.data.githubUrl ?? null);
+          return (
+            <li class="border-t flex items-baseline justify-between gap-6 py-3" style="border-color: #222222;">
+              <div class="flex items-baseline gap-4 min-w-0">
+                {href ? (
+                  <a href={href} target="_blank" rel="noopener noreferrer" class="shrink-0 hover:text-sky-400 transition-colors duration-150">
+                    {entry.data.title}
+                  </a>
+                ) : (
+                  <span class="shrink-0">{entry.data.title}</span>
+                )}
+                <span class="text-sm truncate hidden sm:block" style="color: #555;">
+                  {entry.data.description}
+                </span>
+              </div>
+              <span class="text-sm shrink-0" style="color: #38bdf8;">
+                {(entry.data.tags ?? []).slice(0, 2).join(', ')}
+              </span>
+            </li>
+          );
+        })}
+      </ul>
+      <div class="border-t" style="border-color: #222222;">
+        <a href="/built" class="text-sm py-3 block hover:text-sky-400 transition-colors duration-150" style="color: #555;">
+          All work →
+        </a>
+      </div>
+    </div>
+  )}
+
+</BaseLayout>
