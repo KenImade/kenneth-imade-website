@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Keyframes ──────────────────────────────────────────────── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@layer utilities {
+  .animate-blink   { animation: blink 1.2s step-end infinite; }
+  .animate-fade-up { animation: fade-up 0.45s ease-out forwards; }
+}
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-white text-black dark:bg-black dark:text-white font-mono antialiased;
+  }
+
+  /* Accent-tinted text selection */
+  ::selection {
+    background-color: rgb(96 165 250 / 0.15);
+    color: #60A5FA;
+  }
+
+  /* ── Blog / MDX prose ───────────────────────────────────────── */
+  .prose {
+    @apply max-w-none;
+  }
+
+  .prose h1,
+  .prose h2,
+  .prose h3,
+  .prose h4 {
+    @apply font-bold text-black dark:text-white;
+  }
+
+  .prose h2 { @apply text-2xl mt-10 mb-4; }
+  .prose h3 { @apply text-xl mt-8 mb-3; }
+  .prose h4 { @apply text-lg mt-6 mb-2; }
+
+  .prose p {
+    @apply mb-4 leading-relaxed text-gray-700 dark:text-gray-300;
+  }
+
+  .prose a {
+    @apply text-accent underline underline-offset-2 hover:text-blue-300 transition-colors;
+  }
+
+  .prose ul,
+  .prose ol {
+    @apply mb-4 pl-6;
+  }
+
+  .prose ul  { @apply list-disc; }
+  .prose ol  { @apply list-decimal; }
+  .prose li  { @apply mb-1 text-gray-700 dark:text-gray-300; }
+
+  .prose blockquote {
+    @apply border-l-4 border-accent pl-4 italic text-gray-500 dark:text-gray-400 my-6;
+  }
+
+  .prose pre {
+    @apply rounded-none overflow-x-auto my-6 text-sm;
+  }
+
+  /* Inline code (not inside a pre) */
+  .prose code:not(pre code) {
+    @apply bg-gray-100 dark:bg-gray-900 px-1.5 py-0.5 rounded text-sm text-accent;
+  }
+
+  .prose hr {
+    @apply border-gray-200 dark:border-gray-800 my-8;
+  }
+
+  /* rehype-pretty-code wraps blocks in a figure */
+  .prose figure[data-rehype-pretty-code-figure] {
+    @apply my-6;
+  }
+}
