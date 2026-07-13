@@ -25,4 +25,14 @@ export const projects = [
   liveUrl: "",
   repoUrl: "https://github.com/KenImade/url-shortener",
   },
+  {
+    slug: "gradconnect",
+    title: "GradConnect",
+    blurb:
+      "A platform for graduates and students in Nigeria to search for information about graduate roles and internships.",
+  tags: ["Go", "NextJS", "PostgreSQL"],
+  year: "2026",
+  liveUrl: "https://gradconnect.ng/",
+  repoUrl: "https://github.com/KenImade/gradconnect-api",
+  },
 ];
