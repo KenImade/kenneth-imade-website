@@ -1,0 +1,35 @@
+---
+// Post/section image. Port of renderImage() from the old render.js:
+// renders an <img> if `image.src` is set, otherwise a labeled placeholder box
+// so you can lay out a post before the final image exists.
+interface Props {
+  image?: { src?: string; alt?: string; caption?: string };
+}
+
+const { image } = Astro.props;
+---
+
+{
+  image && (
+    <figure style="margin:28px 0 0;">
+      {image.src ? (
+        <img
+          src={image.src}
+          alt={image.alt || ""}
+          style="width:100%; height:auto; display:block; border-radius:10px;"
+        />
+      ) : (
+        <div style="width:100%; aspect-ratio:16/9; border-radius:10px; background:repeating-linear-gradient(135deg, var(--color-chip-bg), var(--color-chip-bg) 10px, var(--color-bg) 10px, var(--color-bg) 20px); border:1px solid var(--color-border); display:flex; align-items:center; justify-content:center; text-align:center; padding:20px;">
+          <span style="font-family:var(--font-mono); font-size:12.5px; color:var(--color-text-softer);">
+            [ image: {image.alt || "drop an image here"} ]
+          </span>
+        </div>
+      )}
+      {image.caption && (
+        <div style="font-family:var(--font-mono); font-size:12.5px; color:var(--color-text-softer); margin-top:10px;">
+          {image.caption}
+        </div>
+      )}
+    </figure>
+  )
+}

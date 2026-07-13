@@ -1,0 +1,89 @@
+---
+title: "Shortening the Web"
+blurb: "What I learnt from implementing a URL shortener in Go."
+date: 2026-07-01
+readTime: "5 min read"
+image:
+  src: "/images/url-shorteners-explained.png"
+  alt: "Comic strip explaining how URL shorteners work"
+  caption: "URL Shorteners explained"
+---
+
+I've used URL shortening services like bit.ly and TinyURL, but I'd never once thought about how the 
+technology works up until now. Wanting to understand the logic behind this versatile piece of tech, 
+I decided to implement a version of it using Go.
+
+This write-up covers some of the things I found interesting while implementing this software.
+
+## Generating the unique code can be tricky
+
+At a glance, generating the unique code that represents the stored URL feels like a walk in the park. 
+All you have to do is generate a random string of alphanumeric characters. However, as with all engineering 
+projects, your solution can't "just work in the usual straightforward scenarios" — 
+it has to work in all possible scenarios. A few questions I asked myself while building this:
+
+* What happens if two or more users request a code at the same time?
+* How do you prevent malicious actors from guessing generated codes?
+* How do you handle a generated code that has already been used for a previous link?
+
+These questions and others ran through my mind as I wrote my code-generation logic. With them in mind, 
+I implemented a solution that makes use of random code generation via the `math/rand` package 
+(this can be made even stronger with `crypto/rand`), a mutex to guard access within a single process, 
+and a unique constraint on the `code` column backed by retry logic.
+
+## Repositories are nice until they aren't
+
+For this project I built two storage options: in-memory and a PostgreSQL database. In-memory is handy when 
+developing and testing the code, and Postgres is for production. This decision meant making use of a 
+[layered architecture](https://medium.com/@sagar.hudge/layers-in-software-architecture-c8cc16329ff6) 
+alongside the repository pattern.
+
+Using a repository meant defining a storage interface so that the application doesn't care about the 
+internal details of how the data is stored — all it knows is which method to call when carrying out an 
+action on the data.
+
+```go
+type Storage interface {
+	Save(ctx context.Context, u *models.URL) error
+	Get(ctx context.Context, code string) (*models.URL, error)
+	LookUp(ctx context.Context, url string) (*models.URL, error)
+	IncrementClicks(ctx context.Context, code string) error
+
+	Ping(ctx context.Context) error
+}
+```
+
+The pattern made the storage layer maintainable, because each storage backend can implement its own internal 
+logic without having to touch any other part of the codebase. However, the drawback can be seen in the last 
+defined method.
+
+```go
+Ping(ctx context.Context) error
+```
+
+`Ping` here is a function the application calls to check whether the Postgres database is ready to receive 
+queries. It's useful especially when you consider deploying on a Kubernetes cluster that sends this request 
+via the `GET /ready` endpoint.
+
+The problem is that `Ping` is only relevant to the Postgres database, not to the in-memory storage — and 
+because each backend has to satisfy the interface by implementing every one of its methods, we're forced 
+to write a piece of redundant code.
+
+```go
+func (im *MemoryStore) Ping(_ context.Context) error { return nil }
+```
+
+This is the Interface Segregation Principle biting: a fat interface forcing a client to implement a method it 
+doesn't need. It seems trivial in this codebase, but imagine it in a larger project. Not fun. 
+The cleaner fix is to split `Ping` out into its own narrow interface say a `HealthChecker` 
+that only the backends which actually support it implement, leaving `Storage` focused on storage.
+
+## At the end of it all…
+
+Implementing this project was fun and really helped me get a better understanding of how URL shortener services work. 
+It also showed me the game of trade-offs we play as engineers trying to implement a solution, and how solutions 
+evolve as more questions arise with complexity and scale.
+
+If you want to have a scan of the codebase, it's available [here](https://github.com/KenImade/url-shortener).
+
+Till next time, keep solving.

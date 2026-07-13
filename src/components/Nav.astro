@@ -1,0 +1,35 @@
+---
+// Site navigation. Two variants:
+//   <Nav active="work" />                       — full nav with links
+//   <Nav back={{ href: "/work", label: "back to work" }} maxWidth="760px" />
+//                                               — detail-page nav with a back link
+interface Props {
+  active?: "work" | "writing";
+  rise?: boolean; // entrance animation (homepage only)
+  back?: { href: string; label: string };
+  maxWidth?: string;
+}
+
+const { active, rise = false, back, maxWidth } = Astro.props;
+---
+
+<nav class:list={["nav", { rise }]} style={maxWidth ? `max-width:${maxWidth};` : undefined}>
+  <a href="/" class="nav-name">Kenneth Imade</a>
+  {
+    back ? (
+      <a
+        href={back.href}
+        style="font-family:var(--font-mono); font-size:12.5px; color:var(--color-text-softer); display:flex; align-items:center; gap:6px;"
+      >
+        &larr; {back.label}
+      </a>
+    ) : (
+      <div class="nav-links">
+        <a href="/work" class:list={{ active: active === "work" }}>Work</a>
+        <a href="/writing" class:list={{ active: active === "writing" }}>Writing</a>
+        <a href="/#about">About</a>
+        <a href="/#contact">Contact</a>
+      </div>
+    )
+  }
+</nav>

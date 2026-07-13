@@ -1,0 +1,20 @@
+---
+// One writing entry in a list. Takes a content-collection entry from getCollection("posts").
+import { formatPostDate } from "../lib/dates.js";
+
+interface Props {
+  post: any;
+}
+
+const { post } = Astro.props;
+---
+
+<a href={`/posts/${post.id}`} class="row" style="grid-template-columns:1fr auto;">
+  <div>
+    <div style="font-size:16px; font-weight:500; margin-bottom:4px;">{post.data.title}</div>
+    <div style="font-size:13.5px; color:var(--color-text-softer);">{post.data.blurb}</div>
+  </div>
+  <div style="font-family:var(--font-mono); font-size:12px; color:var(--color-text-softest); white-space:nowrap;">
+    {formatPostDate(post.data.date)}
+  </div>
+</a>

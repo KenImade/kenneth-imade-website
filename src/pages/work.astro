@@ -1,0 +1,36 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Nav from "../components/Nav.astro";
+import ProjectRow from "../components/ProjectRow.astro";
+import { projects } from "../data/projects.js";
+---
+
+<BaseLayout title="Work — Kenneth Imade">
+  <Nav active="work" />
+
+  <header class="rise" style="max-width:var(--page-width); margin:0 auto; padding:70px 24px 30px;">
+    <div
+      style="font-family:var(--font-mono); font-size:12px; color:var(--color-accent); margin-bottom:16px; text-transform:uppercase; letter-spacing:0.05em;"
+    >
+      Work
+    </div>
+    <h1
+      style="font-family:var(--font-display); font-weight:600; font-size:44px; line-height:1.1; letter-spacing:-0.02em; margin:0 0 18px;"
+    >
+      Things I've built, broken,<br />and mostly fixed.
+    </h1>
+    <p style="font-size:17px; line-height:1.6; color:var(--color-text-soft); margin:0; max-width:560px;">
+      Backend systems, data pipelines, and infrastructure — the parts of the product nobody screenshots.
+    </p>
+  </header>
+
+  <section style="max-width:var(--page-width); margin:0 auto; padding:20px 24px 100px;">
+    <div>
+      {projects.map((project) => <ProjectRow project={project} />)}
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <a href="/#contact" class="btn btn-dark">Let's talk &rarr;</a>
+  </footer>
+</BaseLayout>

@@ -1,0 +1,119 @@
+---
+// Writing post pages, one per .mdx file in src/content/posts/.
+// The filename becomes the slug: shortening-the-web.mdx → /posts/shortening-the-web
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Nav from "../../components/Nav.astro";
+import ImageFigure from "../../components/ImageFigure.astro";
+import { formatPostDate } from "../../lib/dates.js";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("posts", ({ data }) => !data.draft);
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { title, blurb, date, readTime, subhead, image } = post.data;
+const { Content } = await render(post);
+---
+
+<BaseLayout title={`${title} — Kenneth Imade`}>
+  <Nav back={{ href: "/writing", label: "back to writing" }} maxWidth="680px" />
+
+  <header class="rise" style="max-width:640px; margin:0 auto; padding:60px 24px 40px;">
+    <div
+      style="font-family:var(--font-mono); font-size:12px; color:var(--color-accent); margin-bottom:16px; text-transform:uppercase; letter-spacing:0.05em;"
+    >
+      {formatPostDate(date)}{readTime && ` · ${readTime}`}
+    </div>
+    <h1
+      style="font-family:var(--font-display); font-weight:600; font-size:40px; line-height:1.15; letter-spacing:-0.02em; margin:0 0 20px;"
+    >
+      {title}
+    </h1>
+    <p style="font-size:18px; line-height:1.6; color:var(--color-text-soft); margin:0;">
+      {subhead || blurb}
+    </p>
+  </header>
+
+  <div style="max-width:640px; margin:0 auto; padding:0 24px;">
+    <ImageFigure image={image} />
+  </div>
+
+  <article class="post-body" style="max-width:640px; margin:0 auto; padding:20px 24px 30px;">
+    <Content />
+  </article>
+
+  <footer
+    style="max-width:640px; margin:0 auto; padding:50px 24px 70px; border-top:1px solid var(--color-border); margin-top:20px;"
+  >
+    <a href="/writing" class="btn btn-dark">&larr; More writing</a>
+  </footer>
+</BaseLayout>
+
+<style is:global>
+  /* Styles for MDX-rendered content — same look the old inline styles produced. */
+  .post-body p {
+    font-size: 18px;
+    line-height: 1.8;
+    color: var(--color-text-soft);
+    margin: 0 0 18px;
+  }
+  .post-body h2 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 600;
+    margin: 36px 0 16px;
+    letter-spacing: -0.01em;
+  }
+  .post-body img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 10px;
+    margin: 28px 0;
+  }
+  .post-body code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background: var(--color-chip-bg);
+    padding: 2px 5px;
+    border-radius: 4px;
+  }
+  .post-body pre {
+    background: var(--color-chip-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    overflow-x: auto;
+    margin: 0 0 18px;
+  }
+  .post-body pre code {
+    background: none;
+    padding: 0;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .post-body a {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .post-body a:hover {
+    color: var(--color-text);
+  }
+  .post-body ul,
+  .post-body ol {
+    font-size: 18px;
+    line-height: 1.8;
+    color: var(--color-text-soft);
+    margin: 0 0 18px;
+    padding-left: 24px;
+  }
+  .post-body blockquote {
+    border-left: 3px solid var(--color-border);
+    margin: 0 0 18px;
+    padding: 4px 0 4px 20px;
+    color: var(--color-text-softer);
+  }
+</style>

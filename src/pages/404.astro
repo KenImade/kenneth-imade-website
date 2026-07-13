@@ -1,0 +1,30 @@
+---
+// Custom 404. Builds to dist/404.html — Vercel/Netlify/Cloudflare serve it
+// automatically for any path that doesn't exist (including old ?slug= URLs
+// and case-study/post slugs that were never created).
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Nav from "../components/Nav.astro";
+---
+
+<BaseLayout title="Not found — Kenneth Imade">
+  <Nav />
+
+  <div class="rise" style="max-width:680px; margin:0 auto; padding:100px 24px 120px; text-align:center;">
+    <div
+      style="font-family:var(--font-mono); font-size:12px; color:var(--color-accent); margin-bottom:16px; text-transform:uppercase; letter-spacing:0.05em;"
+    >
+      404
+    </div>
+    <h1 style="font-family:var(--font-display); font-weight:600; font-size:36px; letter-spacing:-0.02em; margin:0 0 14px;">
+      Page not found
+    </h1>
+    <p style="font-size:16px; line-height:1.6; color:var(--color-text-soft); margin:0 0 30px;">
+      This page doesn't exist — or it's a link to something I haven't written up yet.
+    </p>
+    <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+      <a href="/" class="btn btn-dark">Back home</a>
+      <a href="/work" class="btn btn-ghost">See the work</a>
+      <a href="/writing" class="btn btn-ghost">Read the writing</a>
+    </div>
+  </div>
+</BaseLayout>
