@@ -35,4 +35,16 @@ export const projects = [
   liveUrl: "https://gradconnect.ng/",
   repoUrl: "https://github.com/KenImade/gradconnect-api",
   },
+  {
+    slug: "task-queue",
+    title: "Task Queue",
+    blurb:
+      "A dependency-free task queue in Go. Jobs submitted over REST return immediately while a pool of worker goroutines " +
+      "processes them in the background, with exponential-backoff retries and a shutdown path that drains in-flight work " +
+      "rather than dropping it.",
+    tags: ["Go", "task-queue", "worker-pool", "concurrency", "goroutines channels", "rest-api", "graceful shutdown"],
+    year: "2026",
+    liveUrl: "",
+    repoUrl: "https://github.com/KenImade/taskqueue",
+  },
 ];
