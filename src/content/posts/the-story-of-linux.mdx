@@ -1,0 +1,50 @@
+---
+title: "The Story of Linux"
+blurb: "How a Finnish student's hobby project became the kernel behind servers, phones and much of the internet"
+date: 2026-09-23
+readTime: "2 min read"
+image:
+  src: "/images/Tux.svg"
+  alt: "Tux, a cartoon penguin sitting upright, the Linux mascot"
+  caption: "Tux, the Linux mascot, drawn by Larry Ewing in 1996 using GIMP"
+---
+
+Linux, alongside Windows and MacOS make up the three most popular desktop operating systems on the planet. However, outside of the desktop, Linux is the undisputed champion. From the computers, i.e. servers, that make up what we know as the internet, to the Android phone in your pocket, to many of the smart TVs in your home, Linux is the kernel powering such devices.
+
+## Created in Finland for the World
+
+Linux was created by Linus Torvalds, a Finnish computer science student at the University of Helsinki, in 1991. He created Linux as a Unix-like system, written from scratch and inspired by MINIX, a small Unix-like system used for teaching. It started as a personal hobby project: he wanted a Unix-like system for his own PC and was frustrated by the limitations of MINIX. In 1992 he released Linux under the GNU GPL license, which meant any person could use, share and modify it without worrying about the cost and licensing rules that came with other operating systems of the time.
+
+Linux inherited two core principles from the Unix philosophy:
+
+1. Everything is a file, meaning that hardware devices, running processes and system information are all accessed the same way you would access a file. For example, a hard drive shows up as `/dev/sda`.
+2. A program should do only one thing and do that thing really well, and programs should be able to work together so small tools can be combined to do bigger jobs.
+
+## Linux the Kernel, Linux the Operating System
+
+A popular misconception about Linux due to its popularity is people taking Linux as a computer operating system. In actual truth Linux is a kernel. What's the difference?
+
+A kernel is the core program that is responsible for actually talking to the hardware components that make up a computer, i.e. CPUs, memory, storage, etc. It also decides which programs get to use the CPU and memory, and when. While an operating system is the complete software package that manages all computer resources and applications.
+
+A simpler way to think of this is the car analogy. The car being the operating system and the car engine being the kernel.
+
+For most Linux systems, much of the rest of the car comes from GNU, a project started in 1983 by Richard Stallman to build a free Unix-like operating system. GNU had most of the pieces but no finished kernel, and Linux filled that gap, which is why some people call it GNU/Linux. Not every Linux system uses GNU though; Android, for example, uses the Linux kernel with its own set of tools. The complete package people actually install, like Ubuntu or Fedora, is called a distribution.
+
+---
+
+## Source
+
+The information in this note comes from [*The Code* (2001)](https://www.youtube.com/watch?v=zPt_e9Cdk08), a documentary on the story of Linux directed by Hannu Puttonen.
+
+## Further Reading
+
+- *Just for Fun: The Story of an Accidental Revolutionary* by Linus Torvalds and David Diamond, Torvalds' own account of how Linux started.
+- [Linux and the GNU System](https://www.gnu.org/gnu/linux-and-gnu.html), Richard Stallman's explanation of how GNU and Linux fit together.
+- [The Art of Unix Programming](http://www.catb.org/esr/writings/taoup/) by Eric S. Raymond, for more on the Unix philosophy and the "do one thing well" principle.
+- [kernel.org](https://www.kernel.org), the official home of the Linux kernel.
+
+---
+
+*Cover image by [Larry Ewing](lewing@isc.tamu.edu) and The GIMP, Attribution, [https://commons.wikimedia.org/w/index.php?curid=753970](https://commons.wikimedia.org/w/index.php?curid=753970)*
+
+*This is a note I wrote while learning about Linux. If you spot anything I got wrong, feel free to let me know.*
