@@ -12,12 +12,12 @@ export const profile = {
     "all the compliments.",
   ],
   heroSub:
-    "Backend, infrastructure, and data engineer. I like systems that stay up at 3am, pipelines that don't lie to you, and naming things well — two out of three, most days.",
+    "Software engineer. I like systems that stay up at 3am, pipelines that don't lie to you, and naming things well — two out of three, most days.",
   aboutParagraphs: [
-    "I'm Kenneth — a backend, infrastructure, and data engineer who's happiest turning a tangle of services into something that just quietly works. Recent focus: distributed data pipelines, observability that people actually trust, and making on-call less of a personality trait.",
+    "I'm Kenneth — a backend, infrastructure, and data engineer who's happiest turning a tangle of services into something that just quietly works.",
     "Outside of terminals: I collect bad puns, decent coffee, and strong opinions about tabs vs. spaces (spaces, obviously).",
   ],
-  skills: ["Go", "Python", "PostgreSQL", "Kafka", "Kubernetes", "Terraform", "AWS", "gRPC", "Redis", "Airflow"],
+  skills: ["Go", "Python", "PostgreSQL", "Google Cloud", "Dagster"],
   contactHeadline: "Let's fix something together.",
   contactSub: "Open to backend & infra roles — also open to arguing about database indices.",
   socials: {
